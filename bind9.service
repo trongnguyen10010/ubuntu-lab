@@ -45,10 +45,27 @@ ns      IN      A       192.168.3.4
 ubuntu1 IN      A       192.168.3.3
 
 
-Reverse zone
-echo "// nodhcp.com reverse zone
+add 192 Reverse zone to named.conf.local
+// nodhcp.com reverse zone
 zone "3.168.192.in-addr.arpa" {
         type master;
         file "/etc/bind/db.192";
 };
-" >> named.conf.local
+
+create db.192
+sudo cp db.127 db.192
+cat db.192 
+;
+; BIND reverse data file for local 192.168.3.xxx net
+;
+$TTL	604800
+@	IN	SOA	nodhcp.com. root.nodhcp.com. (
+			 2016121903	; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	nodhcp.com.
+3	IN	PTR	ubuntu1
+4	IN	PTR	ubuntu2

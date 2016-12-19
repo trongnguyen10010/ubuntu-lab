@@ -6,11 +6,38 @@ include "/etc/bind/named.conf.options";
 include "/etc/bind/named.conf.local";
 include "/etc/bind/named.conf.default-zones";
 
+cat /etc/bind/named.conf.options # for Caching Nameserver
 
-cat /etc/bind/named.conf.local
+option {
+        forwarders {
+                8.8.8.8
+        };
+};
+
+cat /etc/bind/named.conf.local # for Primary Master
 
 zone "nodhcp.com" {
         type master;
         file "/etc/bind/db.nodhcp.com";
 };
 
+sudo cp /etc/bind/db.local /etc/bind/db.nodhcp.com
+
+cat /etc/bind/db.nodhcp.com # You must increment the Serial Number (yyyymmddss) every time you make changes to the zone file (where ss is the Serial Number)
+
+;
+; BIND data file for nodhcp.com
+;
+$TTL    604800
+@       IN      SOA     nodhcp.com. root.nodhcp.com. (
+                         2016121904     ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      nodhcp.com.
+@       IN      A       192.168.3.4
+@       IN      AAAA    ::1
+ns      IN      A       192.168.3.4
+ubuntu1 IN      A       192.168.3.3

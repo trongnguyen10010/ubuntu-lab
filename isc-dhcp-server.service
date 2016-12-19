@@ -1,4 +1,5 @@
-dhcpd.conf
+cat /etc/dhcp/dhcpd.conf
+
 ddns-update-style none;
 default-lease-time 600;
 max-lease-time 7200;

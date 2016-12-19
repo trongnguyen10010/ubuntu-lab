@@ -17,3 +17,5 @@ APT::Periodic::Unattended-Upgrade "1";
 
 cat /var/log/unattended-upgrades/unattended-upgrades.log
 cat /var/log/unattended-upgrades/unattended-upgrades-dpkg.log
+
+sudo unattended-upgrade --debug --dry-run

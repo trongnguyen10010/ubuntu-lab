@@ -11,3 +11,7 @@ subnet 192.168.3.0 netmask 255.255.255.0 {
    option domain-name "nodhcp.com";
    option routers 192.168.3.1;
 }
+
+sudo systemctl status isc-dhcp-server.service
+sudo systemctl restart isc-dhcp-server.service
+sudo systemctl status isc-dhcp-server.service

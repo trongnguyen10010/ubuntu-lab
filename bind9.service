@@ -1,5 +1,13 @@
 sudo apt install -y bind9 dnsutils
 
+sudo ufw allow proto tcp from 192.168.3.0/24 to any port 53 comment dns
+sudo ufw allow proto udp from 192.168.3.0/24 to any port 53 comment dns
+
+53/tcp                     ALLOW       192.168.3.0/24             # dns
+53/udp                     ALLOW       192.168.3.0/24             # dns
+
+
+
 cat /etc/bind/named.conf
 
 include "/etc/bind/named.conf.options";

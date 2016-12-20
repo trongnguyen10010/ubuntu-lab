@@ -77,3 +77,28 @@ $TTL	604800
 @	IN	NS	nodhcp.com.
 3	IN	PTR	ubuntu1
 4	IN	PTR	ubuntu2
+
+@primary master, add "allow-transfer { 192.168.1.11; };" and "also-notify { 192.168.1.11; };" to forward zone and reverse zone 
+
+@secondary, edit /etc/bind/named.conf.local
+// nodhcp.com
+zone "nodhcp.com" {
+	type slave;
+        file "db.nodhcp.com";
+	masters {192.168.3.4;};
+};
+
+// nodhcp.com reverse zone
+zone "3.168.192.in-addr.arpa" {
+	type slave;
+	file "db.192";
+	masters {192.168.3.4;};
+};
+
+restart bind9 service
+
+check /var/log/syslog for the "action"
+
+the db.192 and db.nodhcp.com have been transferred to /var/cache/bind @seconadry 
+
+Remember to increase the Serial Nunber on each change
